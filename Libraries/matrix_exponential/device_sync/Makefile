@@ -1,10 +1,12 @@
 # ------------------------------
 
+ROCM_PATH ?= /opt/rocm
+CXX ?= ${ROCM_PATH}/bin/hipcc
 HIPCC    = $(CXX)
 ROCM_GPU ?= $(strip $(shell rocminfo |grep -m 1 -E gfx[^0]{1} | sed -e 's/ *Name: *//'))
 OPENMP_FLAGS = -fopenmp
 HIPFLAGS = -I${ROCM_PATH}/include ${OPENMP_FLAGS} -I${ROCM_PATH}/include/rocprofiler-sdk-roctx
-LDFLAGS = -L${ROCM_PATH}/lib -lamdhip64 -lrocblas  -lrocprofiler-sdk-roctx ${OPENMP_FLAGS}
+LDFLAGS = -L${ROCM_PATH}/lib -lamdhip64 -lrocblas -lrocprofiler-sdk-roctx ${OPENMP_FLAGS}
 
 # ------------------------------
 
